@@ -65,7 +65,7 @@ module SmartSMS
         def verify!(code)
           result = verify code
           if result
-            send("#{self.class.sms_verification_column}=", Time.now)
+            send("#{self.class.sms_verification_column}=", Time.zone.now)
             save(validate: false)
           end
         end
@@ -95,7 +95,7 @@ module SmartSMS
         # 获取最新的一条有效短信记录
         #
         def latest_message
-          end_time = Time.now
+          end_time = Time.zone.now
           start_time = end_time - SmartSMS.config.expires_in
           if SmartSMS.config.store_sms_in_local
             send(self.class.messages_association_name)
