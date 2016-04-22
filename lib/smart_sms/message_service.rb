@@ -62,7 +62,7 @@ module SmartSMS
       # * mobile: 接收短信的手机号
       #
       def find_messages(api, options = {})
-        options[:end_time]   = Time.now if options[:end_time].blank?
+        options[:end_time]   = Time.zone.now if options[:end_time].blank?
         options[:start_time] = options[:end_time] - SmartSMS.config.default_interval if options[:start_time].blank?
         options[:end_time]   = parse_time(options[:end_time])
         options[:start_time] = parse_time(options[:start_time])
