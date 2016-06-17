@@ -99,8 +99,8 @@ module SmartSMS
           start_time = end_time - SmartSMS.config.expires_in
           if SmartSMS.config.store_sms_in_local
             send(self.class.messages_association_name)
-              .where('send_time >= ? and send_time <= ?', start_time, end_time)
-              .last
+            .where('send_time >= ? and send_time <= ?', start_time, end_time)
+            .last
           else
             result = SmartSMS.find(
               start_time: start_time,
@@ -137,9 +137,7 @@ module SmartSMS
         def save_or_return_message(sms, text)
           if SmartSMS.config.store_sms_in_local
             message = send(self.class.messages_association_name).build sms
-            if sms.blank? || sms['send_time'].blank?
-              message.send_time = Time.zone.now
-            end
+            message.send_time = Time.zone.now
             message.code = text
             message.save
           else
